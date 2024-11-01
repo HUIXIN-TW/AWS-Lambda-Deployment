@@ -5,15 +5,16 @@ import os
 NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 DATABASE_ID = os.getenv("DATABASE_ID")
 
+
 def query_notion_task(filter_payload):
     # Set the Notion API URL
     url = f"https://api.notion.com/v1/databases/{DATABASE_ID}/query"
-    
+
     # Define headers, including the API token
     headers = {
         "Authorization": f"Bearer {NOTION_TOKEN}",
         "Notion-Version": "2022-06-28",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 
     # Make a POST request to query the database with the filter

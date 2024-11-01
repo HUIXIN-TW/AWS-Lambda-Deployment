@@ -1,0 +1,27 @@
+name: Lint Code
+
+on:
+  push:
+    branches:
+        - '*'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8  # Install the linter
+
+      - name: Run linter
+        run: |
+          flake8 .  # Lint all Python files in the repository

@@ -3,6 +3,7 @@ from datetime import datetime
 from create_notion_task.create_notion_task import create_notion_task
 from query_notion_task.query_notion_task import query_notion_task
 
+
 def lambda_handler(event, context):
     # Get today's date in the format Notion expects (YYYY-MM-DD)
     today = datetime.now().strftime("%Y-%m-%d")
@@ -11,9 +12,7 @@ def lambda_handler(event, context):
     filter_payload = {
         "filter": {
             "property": "Date",  # Change this to your date property name
-            "date": {
-                "equals": today
-            }
+            "date": {"equals": today},
         }
     }
 
@@ -32,14 +31,12 @@ def lambda_handler(event, context):
 
     # Create a new task
     response = create_notion_task(task_name, date, initiative, extra_info, location)
-    
+
     # Log the response for debugging
     print("Create Task Response:", response.json())
 
-    return {
-        'statusCode': 200,
-        'body': json.dumps({"tasks": tasks})
-    }
+    return {"statusCode": 200, "body": json.dumps({"tasks": tasks})}
+
 
 # Mock event and context for local testing
 if __name__ == "__main__":

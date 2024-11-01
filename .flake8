@@ -1,0 +1,5 @@
+[flake8]
+# Exclude the /python directory from checks
+exclude = python/*
+# Ignore specific warnings
+ignore = E501
