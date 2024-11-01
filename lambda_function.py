@@ -1,10 +1,24 @@
 import json
+from datetime import datetime
 from create_notion_task.create_notion_task import create_notion_task
 from query_notion_task.query_notion_task import query_notion_task
 
 def lambda_handler(event, context):
+    # Get today's date in the format Notion expects (YYYY-MM-DD)
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # Define the filter to only get today's tasks
+    filter_payload = {
+        "filter": {
+            "property": "Date",  # Change this to your date property name
+            "date": {
+                "equals": today
+            }
+        }
+    }
+
     # Query today's tasks
-    tasks = query_notion_task()
+    tasks = query_notion_task(filter_payload)
 
     # Print tasks for debugging (or process as needed)
     print("Today's tasks in Notion database:", tasks)

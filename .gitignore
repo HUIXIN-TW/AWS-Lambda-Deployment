@@ -1,14 +1,3 @@
-bin/*
-certifi/*
-certifi-2024.8.30.dist-info/*
-charset_normalizer/*
-charset_normalizer-3.4.0.dist-info/*
-idna/*
-idna-3.10.dist-info/*
-urllib3/*
-urllib3-2.2.3.dist-info/*
-requests/*
-requests-2.32.3.dist-info/*
-query_notion_task/__pycache__/*
-create_notion_task/__pycache__/*
 *.zip
+*.*.pyc
+/lambda_package
