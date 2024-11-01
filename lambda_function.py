@@ -1,37 +1,34 @@
-import requests
 import json
-import os
-
-# Fetch Notion API token from environment variables
-NOTION_TOKEN = os.getenv("NOTION_TOKEN")
-DATABASE_ID = os.getenv("DATABASE_ID")
+from create_notion_task.create_notion_task import create_notion_task
+from query_notion_task.query_notion_task import query_notion_task
 
 def lambda_handler(event, context):
-    # Set the Notion API URL
-    url = f"https://api.notion.com/v1/databases/{DATABASE_ID}/query"
-
-    # Define headers, including the API token
-    headers = {
-        "Authorization": f"Bearer {NOTION_TOKEN}",
-        "Notion-Version": "2022-06-28",
-        "Content-Type": "application/json"
-    }
-
-    # Make a POST request to query the database
-    response = requests.post(url, headers=headers)
-    data = response.json()
-
-    # Extract and log titles of the tasks
-    tasks = []
-    for result in data.get("results", []):
-        title = result.get("properties", {}).get("Name", {}).get("title", [])
-        if title:
-            tasks.append(title[0]["text"]["content"])
+    # Query today's tasks
+    tasks = query_notion_task()
 
     # Print tasks for debugging (or process as needed)
-    print("Tasks in Notion database:", tasks)
+    print("Today's tasks in Notion database:", tasks)
+
+    # Logic to create a new task
+    task_name = "New Task Title From AWS Lambda"
+    date = "2024-11-01"
+    initiative = "UWA"
+    extra_info = "Additional Info By AWS Lambda"
+    location = "Perth"
+
+    # Create a new task
+    response = create_notion_task(task_name, date, initiative, extra_info, location)
+    
+    # Log the response for debugging
+    print("Create Task Response:", response.json())
 
     return {
         'statusCode': 200,
         'body': json.dumps({"tasks": tasks})
     }
+
+# Mock event and context for local testing
+if __name__ == "__main__":
+    mock_event = {}
+    mock_context = None
+    print(lambda_handler(mock_event, mock_context))
