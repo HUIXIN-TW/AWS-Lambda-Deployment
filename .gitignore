@@ -1,3 +1,7 @@
 *.zip
 *.*.pyc
 /python
+notionsyncgcal/*
+lambda_layer/python/*
+
+.DS_Store
